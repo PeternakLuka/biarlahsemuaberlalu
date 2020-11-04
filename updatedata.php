@@ -1,27 +1,33 @@
-<?php
-    if(count($_FILES) > 0) {
-        if(is_uploaded_file($_FILES['userImage']['tmp_name'])) {
-            require_once "include/koneksi.php";
-            $imgData =addslashes(file_get_contents($_FILES['userImage']['tmp_name']));
-            $imageProperties = getimageSize($_FILES['userImage']['tmp_name']);
-            
-            $sql = "INSERT INTO tb_foto(imageType ,imageData)
-            VALUES('{$imageProperties['mime']}', '{$imgData}')";
-            $current_id = mysqli_query($conn, $sql) or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_error($conn));
-            if(isset($current_id)) {
-                header("Location: index.php");
-            }
-        }
-    }
-?>
 <title>
     Update Data | Edit
 </title>
 <body>
-    Halaman Khusus Untuk Update Data / Upload Image
-    <form name="frmImage" enctype="multipart/form-data" action="" method="post" class="frmImageUpload">
-        <label>Upload Image File:</label><br/>
-        <input name="userImage" type="file" class="inputFile" />
-        <input type="submit" value="Submit" class="btnSubmit" />
+    <?php 
+        include_once("include/koneksi.php");
+        $result = mysqli_query($conn, "SELECT * FROM tb_data ORDER BY konfirmasi DESC");
+    ?>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <td>Kota/Kabupaten</td>
+                <td>Konfirmasi</td>
+                <td>Sembuh</td>
+                <td>Suspek</td>
+            </tr>
+            <?php  
+                while($data = mysqli_fetch_array($result)) {   
+                    echo "<tr>";
+                    echo "<td><b>".$data['ktkb']."</b></td>";
+                    echo "<td><input type='text' value=".$data['konfirmasi']."></td>";
+                    echo "<td><input type='text' value=".$data['sembuh']."></td>";
+                    echo "<td><input type='text' value=".$data['suspek']."></td>";
+                    echo "</tr>";
+                }
+            ?>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Update Data"/></td>
+                <td colspan="2" align="center"><input type="submit" value="Upload Gambar"/></td>
+            </tr>
+        </table>
     </form>
 </body>
