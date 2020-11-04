@@ -1,11 +1,34 @@
 <!DOCTYPE html>
+<?php
+    if(count($_FILES) > 0) {
+        if(is_uploaded_file($_FILES['userImage']['tmp_name'])) {
+            require_once "include/koneksi.php";
+            $imgData =addslashes(file_get_contents($_FILES['userImage']['tmp_name']));
+            $imageProperties = getimageSize($_FILES['userImage']['tmp_name']);
+            
+            $rslt = mysqli_query($conn, "SELECT imageId FROM tb_foto");
+            while($data_img = mysqli_fetch_array($rslt)) {
+                if(is_null($data_img['imageId'])){
+                    $sql = "INSERT INTO tb_foto(imageType ,imageData)VALUES('{$imageProperties['mime']}', '{$imgData}')";
+                }else{
+                    $sql = "UPDATE tb_foto SET imageType='{$imageProperties['mime']}', imageData='{$imgData}' WHERE imageId=1";
+                }
+            }
+            
+            $current_id = mysqli_query($conn, $sql) or die("<b>Error:</b> Problem on Image Insert<br/>" . mysqli_error($conn));
+            if(isset($current_id)) {
+                header("Location: index.php");
+            }
+        }
+    }
+?>
 <html>
     <head>
         <style>
             .grid-container {
                 display: grid;
                 grid-template-columns: auto auto auto auto;
-                grid-template-rows: 40px;
+                grid-template-rows: 50px;
                 grid-gap: 10px;
                 background-color: #2196F3;
                 padding: 10px;
@@ -35,9 +58,106 @@
                 display: grid;
                 grid-template-columns: auto auto auto;
             }
+
+            #popup {
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                background: rgba(0,0,0,.7);
+                top: 0;
+                left: 0;
+                z-index: 9999;
+                visibility: hidden;
+            }
+
+            .window {
+                width: 400px;
+                height: 100px;
+                background: #fff;
+                border-radius: 10px;
+                position: relative;
+                padding: 10px;
+                text-align: center;
+                margin: 15% auto;
+            }
+            .window h2 {
+                margin: 30px 0 0 0;
+            }
+            .close-button {
+                width: 6%;
+                height: 20%;
+                line-height: 23px;
+                background: #000;
+                border-radius: 50%;
+                border: 3px solid #fff;
+                display: block;
+                text-align: center;
+                color: #fff;
+                text-decoration: none;
+                position: absolute;
+                top: -10px;
+                right: -10px;	
+            }
+
+            /* Memunculkan Jendela Pop Up*/
+            #popup:target {
+                visibility: visible;
+            }
+
+            .headknn { 
+                margin: 3%; 
+                position: relative; 
+            } 
+    
+            .first-txt { 
+                position: absolute; 
+                top: 15%; 
+                right: 23%; 
+                color: #fff;
+            } 
+
+            .info { 
+                margin: 3%;
+                position: relative; 
+            } 
+    
+            .info-txt1 { 
+                position: absolute; 
+                top: 6%; 
+                left: 15%; 
+                color: #fff;
+            }
+            .info-txt2 { 
+                position: absolute; 
+                top: 6%; 
+                left: 15%; 
+                color: #fff;
+            } 
+            .info-txt3 { 
+                position: absolute; 
+                top: 6%; 
+                left: 15%; 
+                color: #fff;
+            } 
+            .info-txt4 { 
+                position: absolute; 
+                top: 6%; 
+                left: 22%; 
+                color: #fff;
+            } 
         </style>
     </head>
-    <body>
+    <body style="margin: 0px">
+        <div id="popup">
+            <div class="window">
+                <a href="#" class="close-button" title="Close">X</a>
+                <form name="frmImage" enctype="multipart/form-data" action="" method="post" class="frmImageUpload">
+                    <label>Upload Gambar:</label><br/><br>
+                    <input name="userImage" type="file" class="inputFile" /><br><br>
+                    <input type="submit" value="Update" class="close-button" />
+                </form>
+            </div>
+        </div>
         <?php
             $no = 0;
             $kt = array();
@@ -66,75 +186,112 @@
         ?>
         <table width="100%">
             <tr>
-                <td align="left" width="50%">   
-                    <img src="img/LOGOKIRIBARU.png?>" width="60%"           height="60%" /><br/>
+                <td align="left" width="50%">
+                    <a href="updatedata.php">
+                        <img src="img/LOGOKIRIBARU.png?>" width="60%" height="60%" />
+                    </a>
                 </td>
                 <td align="right" width="50%">
-                    <img src="img/logokananbaru.png?>" width="60%" height="60%" /><br/>
+                    <div class="headknn"> 
+                        <img src="img/logokananbaru.png" width="60%" height="60%"> 
+                        <h3 class="first-txt"> 
+                            <?php echo date("d F Y", mktime(0, 0, 0, date("m"), date("d")-1, date("Y"))); ?> 
+                        </h3>
+                    </div>
                 </td>
             </tr>
         </table>
-        <br>
-        <div class="grid-container">
-            <div class="mantap1" style="background-image: url('img/LOGOKIRIBARU.png');"><?php echo $sum_p[0]; ?></div>
-            <div class="mantap2"><?php echo $sum_s[0]; ?></div>
-            <div class="mantap3"><?php echo $sum_m[0]; ?></div>  
-            <div class="mantap4"><?php echo $total; ?></div>
-        </div>
-        <br/>
-        <table width="100%">
+        <table style="margin-left: 7%">
+            <tr>
+                <td>
+                    <div class="info"> 
+                        <img src="img/positif.png" width="110%" height="115%"> 
+                        <h2 class="info-txt1"> 
+                            <?php echo $sum_p[0]; ?> 
+                        </h2>
+                    </div>
+                </td>
+                <td>
+                    <div class="info"> 
+                        <img src="img/sembuh.png" width="110%" height="115%"> 
+                        <h2 class="info-txt2"> 
+                            <?php echo $sum_s[0]; ?> 
+                        </h2>
+                    </div>
+                </td>
+                <td>
+                    <div class="info"> 
+                        <img src="img/meninggal.png" width="110%" height="115%"> 
+                        <h2 class="info-txt3"> 
+                            <?php echo $sum_m[0]; ?> 
+                        </h2>
+                    </div>
+                </td>
+                <td>
+                    <div class="info"> 
+                        <img src="img/malangraya.png" width="110%" height="115%"> 
+                        <h2 class="info-txt4"> 
+                            <?php echo $total; ?> 
+                        </h2>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table style="border-collapse: collapse;" width="100%">
             <tr align="center">
-                <td colspan="2">DATA COVID-19 PROVINSI JATIM</td>
-                <td>DATA COVID-19 KOTA MALANG</td>
+                <td colspan="2"><a style="font-size:2vw; font-family:calibri"><strong>DATA COVID-19 PROVINSI JATIM</strong></a></td>
+                <td><a style="font-size:2vw; font-family:calibri"><strong>DATA COVID-19 KOTA MALANG</strong></a></td>
             </tr>
             <tr>
-                <td width="32%">
-                    <table border="1" width="100%">
+                <td width="27%">
+                    <table style="border-collapse: collapse;" width="100%">
                         <tr>
-                            <td>Kota/Kabupaten</td>
-                            <td>Konfirmasi</td>
-                            <td>Sembuh</td>
-                            <td>Suspect</td>
+                            <th style="font-size: 1.2vw; background-color:#3c1d47; color:#fff; padding-top:8px; padding-bottom:8px; text-align:center">Kota/Kabupaten</th>
+                            <th style="font-size: 1.2vw; background-color:#ed183d; color:#fff; text-align:center">Konfirm</th>
+                            <th style="font-size: 1.2vw; background-color:#00a550; color:#fff; text-align:center">Sembuh</th>
+                            <th style="font-size: 1.2vw; background-color:#f5811e; color:#fff; text-align:center">Suspect</th>
                         </tr>
                         <?php  
                             $x = 0;
                             while($x < 20) {   
                                 echo "<tr>";
-                                echo "<td>".$kt[$x]."</td>";
-                                echo "<td>".$kon[$x]."</td>";
-                                echo "<td>".$sem[$x]."</td>";
-                                echo "<td>".$sus[$x]."</td>";  
+                                echo "<td style='padding-top:2px; padding-bottom:2px; font-size: 1.05vw;'><b>".$kt[$x]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$kon[$x]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sem[$x]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sus[$x]."</b></td>";  
                                 echo "</tr>";
                                 $x++;
                             }
                         ?>
                     </table>
                 </td>
-                <td width="32%">
-                    <table border="1" width="100%" >
+                <td width="27%">
+                    <table style="border-collapse: collapse;" width="100%" >
                         <tr>
-                            <td>Kota/Kabupaten</td>
-                            <td>Konfirmasi</td>
-                            <td>Sembuh</td>
-                            <td>Suspect</td>
+                            <th style="font-size: 1.2vw; background-color:#3c1d47; color:#fff; padding-top:8px; padding-bottom:8px; text-align:center">Kota/Kabupaten</th>
+                            <th style="font-size: 1.2vw; background-color:#ed183d; color:#fff; text-align:center">Konfirm</th>
+                            <th style="font-size: 1.2vw; background-color:#00a550; color:#fff; text-align:center">Sembuh</th>
+                            <th style="font-size: 1.2vw; background-color:#f5811e; color:#fff; text-align:center">Suspect</th>
                         </tr>
                         <?php  
                             for($xy = 20; $xy < 40; $xy++) {   
                                 echo "<tr>";
-                                echo "<td>".$kt[$xy]."</td>";
-                                echo "<td>".$kon[$xy]."</td>";
-                                echo "<td>".$sem[$xy]."</td>";
-                                echo "<td>".$sus[$xy]."</td>";  
+                                echo "<td style='padding-top:2px; padding-bottom:2px; font-size: 1.05vw;'><b>".$kt[$xy]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$kon[$xy]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sem[$xy]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sus[$xy]."</b></td>";  
                                 echo "</tr>";
                             }
                         ?>
                     </table>
                 </td>
-                <td width="36%" align="center">
+                <td width="40%" align="center">
                     <?php
                         while($row = mysqli_fetch_array($result_img)) {
                     ?>
-                    <img src="imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100px" height="100px" /><br/>
+                    <a href="#popup">
+                        <img src="imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="49%" />
+                    </a><br/>
                     <?php		
                         }
                         mysqli_close($conn);
