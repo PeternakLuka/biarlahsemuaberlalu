@@ -25,10 +25,6 @@
 <html>
     <head>
         <style>
-            @font-face {
-                font-family: EB;
-                src: url(EB.otf);
-            }
             .grid-container {
                 display: grid;
                 grid-template-columns: auto auto auto auto;
@@ -39,7 +35,6 @@
             }
 
             .grid-container > div {
-                /* background-color: rgba(255, 255, 255, 0.8); */
                 text-align: center;
                 padding: auto 0;
                 font-size: 30px;
@@ -54,7 +49,6 @@
 
             .grid-container1 > div {
                 background-color: rgba(255, 255, 255, 0.8);
-                /* text-align: center; */
                 font-size: 20px;
             }
 
@@ -170,14 +164,13 @@
             $kon = array();
             $sem = array();
             $sus = array();
-            $kot = array();
             include_once("include/koneksi.php");
             $result_ = mysqli_query($conn, "SELECT * FROM tb_simpanan");
             $result = mysqli_query($conn, "SELECT * FROM tb_data ORDER BY konfirmasi DESC");
             $result_img = mysqli_query($conn, "SELECT imageId FROM tb_foto");
             
             $sum_p = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data"));
-            $sum_s = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(sembuh) FROM tb_data"));            
+            $sum_s = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(sembuh) FROM tb_data"));
             $sum_mr1 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where kd_data = '2'"));
             $sum_mr2 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where kd_data = '25'"));
             $sum_mr3 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where kd_data = '14'"));
@@ -188,9 +181,9 @@
                 $kon[$no] = $data['konfirmasi'];
                 $sem[$no] = $data['sembuh'];
                 $sus[$no] = $data['suspek'];
-                $kot[$no] = $data['kd_data'];
                 $no++;
             }
+
             while($data = mysqli_fetch_array($result_)) {
                 $smp[$no_] = $data['isi'];
                 $no_++;
@@ -200,7 +193,7 @@
             <tr>
                 <td align="left" width="50%">
                     <a href="updatedata.php">
-                        <img src="img/LOGOKIRIBARU.png?>" width="60%" height="%" min-width="50%" max-width="100%" />
+                        <img src="img/LOGOKIRIBARU.png?>" width="60%" height="60%" />
                     </a>
                 </td>
                 <td align="right" width="50%">
@@ -215,8 +208,7 @@
                 </td>
             </tr>
         </table>
-        <center>
-        <table>
+        <table style="margin-left: 7%">
             <tr>
                 <td>
                     <div class="info"> 
@@ -252,40 +244,29 @@
                 </td>
             </tr>
         </table>
-        </center>
         <table style="border-collapse: collapse;" width="100%">
             <tr align="center">
-                <td colspan="2"><a style="font-size:2vw; font-family:EB"><i>DATA COVID-19 PROVINSI JATIM</i></a></td>
-                <td><a style="font-size:2vw; font-family:EB"><i>DATA COVID-19 KOTA MALANG</i></a></td>
+                <td colspan="2"><a style="font-size:2vw; font-family:calibri"><strong>DATA COVID-19 PROVINSI JATIM</strong></a></td>
+                <td><a style="font-size:2vw; font-family:calibri"><strong>DATA COVID-19 KOTA MALANG</strong></a></td>
             </tr>
             <tr>
                 <td width="27%">
                     <table style="border-collapse: collapse;" width="100%">
                         <tr>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#3c1d47; color:#fff; padding-top:10px; padding-bottom:10px; text-align:center"><i>KOTA/KABUPATEN</i></th>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#D21404; color:#fff; text-align:center"><i>KONFIRM</i></th>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#028A0F; color:#fff; text-align:center"><i>SEMBUH</i></th>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#FF6700; color:#fff; text-align:center"><i>SUSPECT</i></th>
+                            <th style="font-size: 1.2vw; background-color:#3c1d47; color:#fff; padding-top:8px; padding-bottom:8px; text-align:center">Kota/Kabupaten</th>
+                            <th style="font-size: 1.2vw; background-color:#ed183d; color:#fff; text-align:center">Konfirm</th>
+                            <th style="font-size: 1.2vw; background-color:#00a550; color:#fff; text-align:center">Sembuh</th>
+                            <th style="font-size: 1.2vw; background-color:#f5811e; color:#fff; text-align:center">Suspect</th>
                         </tr>
                         <?php  
                             $x = 0;
                             while($x < 20) {   
-                                if ($kot[$x] == 1 || $kot[$x] == 25 || $kot[$x] == 2 || $kot[$x] == 14){
-                                    echo "<tr>";
-                                    echo "<td style='padding-top:3px; font-family:arial; padding-bottom:3px; font-size: 0.94vw; background-color:#53207c; color:#fff;'><b><i>".$kt[$x]."</i></b></td>";
-                                    echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center; background-color:#e12423; color:#fff'><b><i>".$kon[$x]."</i></b></td>";
-                                    echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center; background-color:#06ac0c; color:#fff'><b><i>".$sem[$x]."</i></b></td>";
-                                    echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center; background-color:#FC8A17; color:#fff'><b><i>".$sus[$x]."</i></b></td>";  
-                                    echo "</tr>";                                    
-                                }
-                                else {
-                                    echo "<tr>";
-                                    echo "<td style='padding-top:3px; font-family:arial; padding-bottom:3px; font-size: 0.94vw;'><b><i>".$kt[$x]."</i></b></td>";
-                                    echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center'><b><i>".$kon[$x]."</i></b></td>";
-                                    echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center'><b><i>".$sem[$x]."</i></b></td>";
-                                    echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center'><b><i>".$sus[$x]."</i></b></td>";  
-                                    echo "</tr>";
-                                }
+                                echo "<tr>";
+                                echo "<td style='padding-top:2px; padding-bottom:2px; font-size: 1.05vw;'><b>".$kt[$x]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$kon[$x]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sem[$x]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sus[$x]."</b></td>";  
+                                echo "</tr>";
                                 $x++;
                             }
                         ?>
@@ -294,29 +275,19 @@
                 <td width="27%">
                     <table style="border-collapse: collapse;" width="100%" >
                         <tr>
-                        <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#3c1d47; color:#fff; padding-top:10px; padding-bottom:10px; text-align:center"><i>KOTA/KABUPATEN</i></th>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#D21404; color:#fff; text-align:center"><i>KONFIRM</i></th>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#028A0F; color:#fff; text-align:center"><i>SEMBUH</i></th>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#FF6700; color:#fff; text-align:center"><i>SUSPECT</i></th>
-                        <?php
-
-                            for($xy = 20; $xy < 40; $xy++) {
-                                if ($kot[$xy] == 1 || $kot[$xy] == 25 || $kot[$xy] == 2 || $kot[$xy] == 14){
-                                    echo "<tr>";
-                                echo "<td style='padding-top:3px; font-family:arial; padding-bottom:3px; font-size: 0.94vw; background-color:#53207c; color:#fff;'><b><i>".$kt[$xy]."</i></b></td>";
-                                echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center; background-color:#e12423; color:#fff'><b><i>".$kon[$xy]."</i></b></td>";
-                                echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center; background-color:#06ac0c; color:#fff'><b><i>".$sem[$xy]."</i></b></td>";
-                                echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center; background-color:#FC8A17; color:#fff'><b><i>".$sus[$xy]."</i></b></td>";  
+                            <th style="font-size: 1.2vw; background-color:#3c1d47; color:#fff; padding-top:8px; padding-bottom:8px; text-align:center">Kota/Kabupaten</th>
+                            <th style="font-size: 1.2vw; background-color:#ed183d; color:#fff; text-align:center">Konfirm</th>
+                            <th style="font-size: 1.2vw; background-color:#00a550; color:#fff; text-align:center">Sembuh</th>
+                            <th style="font-size: 1.2vw; background-color:#f5811e; color:#fff; text-align:center">Suspect</th>
+                        </tr>
+                        <?php  
+                            for($xy = 20; $xy < 40; $xy++) {   
+                                echo "<tr>";
+                                echo "<td style='padding-top:2px; padding-bottom:2px; font-size: 1.05vw;'><b>".$kt[$xy]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$kon[$xy]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sem[$xy]."</b></td>";
+                                echo "<td style='font-size: 1.05vw; text-align:center'><b>".$sus[$xy]."</b></td>";  
                                 echo "</tr>";
-                                }
-                                else{
-                                    echo "<tr>";
-                                echo "<td style='padding-top:3px; font-family:arial; padding-bottom:3px; font-size: 0.94vw;'><b><i>".$kt[$xy]."</i></b></td>";
-                                echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center'><b><i>".$kon[$xy]."</i></b></td>";
-                                echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center'><b><i>".$sem[$xy]."</i></b></td>";
-                                echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center'><b><i>".$sus[$xy]."</i></b></td>";  
-                                echo "</tr>";
-                                }
                             }
                         ?>
                     </table>
@@ -326,7 +297,7 @@
                         while($row = mysqli_fetch_array($result_img)) {
                     ?>
                     <a href="#popup">
-                        <img src="imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="auto"  min-width="50%" max-width="100%"/>
+                        <img src="imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="49%" />
                     </a><br/>
                     <?php		
                         }

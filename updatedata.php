@@ -38,7 +38,8 @@
                 }
             ?>
             <tr>
-                <td colspan="2" align="center">
+                <td colspan="4" align="center">
+                    <br/>
                     <button type="submit" name="update">Update Data</button>
                 </td>
             </tr>
