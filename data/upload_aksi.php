@@ -1,45 +1,28 @@
-<!-- import excel ke mysql -->
-<!-- www.malasngoding.com -->
-
 <?php 
-// menghubungkan dengan koneksi
-include 'include/koneksi.php';
-// menghubungkan dengan library excel reader
-include "include/excel_reader2.php";
-?>
+	include '../include/koneksi.php';
+	include "../include/excel_reader2.php";
+	
+	$target = basename($_FILES['filee']['name']) ;
+	move_uploaded_file($_FILES['filee']['tmp_name'], $target);
 
-<?php
-// upload file xls
-$target = basename($_FILES['filepegawai']['name']) ;
-move_uploaded_file($_FILES['filepegawai']['tmp_name'], $target);
+	chmod($_FILES['filee']['name'],0777);
 
-// beri permisi agar file xls dapat di baca
-chmod($_FILES['filepegawai']['name'],0777);
+	$data = new Spreadsheet_Excel_Reader($_FILES['filee']['name'],false);
 
-// mengambil isi file xls
-$data = new Spreadsheet_Excel_Reader($_FILES['filepegawai']['name'],false);
-// menghitung jumlah baris data yang ada
-$jumlah_baris = $data->rowcount($sheet_index=0);
+	$jumlah_baris = $data->rowcount($sheet_index=0);
 
-// jumlah default data yang berhasil di import
-$berhasil = 0;
-for ($i=2; $i<=$jumlah_baris; $i++){
+	$kd_data = 1;
+	for ($i=2; $i<=$jumlah_baris; $i++){
 
-	// menangkap data dan memasukkan ke variabel sesuai dengan kolumnya masing-masing
-	$nama     = $data->val($i, 1);
-	$alamat   = $data->val($i, 2);
-	$telepon  = $data->val($i, 3);
+		$ktkb     		= $data->val($i, 1);
+		$konfirmasi     = $data->val($i, 2);
+		$sembuh   		= $data->val($i, 3);
+		$suspek  		= $data->val($i, 4);
 
-	if($nama != "" && $alamat != "" && $telepon != ""){
-		// input data ke database (table data_pegawai)
-		mysqli_query($koneksi,"INSERT into data_pegawai values('','$nama','$alamat','$telepon')");
-		$berhasil++;
+		if($ktkb != ""){
+			mysqli_query($conn, "UPDATE tb_data SET ktkb='$ktkb', konfirmasi='$konfirmasi', sembuh='$sembuh', suspek='$suspek' WHERE kd_data=$kd_data");
+			$kd_data++;
+		}
 	}
-}
-
-// hapus kembali file .xls yang di upload tadi
-// unlink($_FILES['filepegawai']['name']);
-
-// alihkan halaman ke index.php
-header("location:index.php?berhasil=$berhasil");
+	header("location:../index.php");
 ?>

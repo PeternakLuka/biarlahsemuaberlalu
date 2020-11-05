@@ -39,7 +39,6 @@
             }
 
             .grid-container > div {
-                /* background-color: rgba(255, 255, 255, 0.8); */
                 text-align: center;
                 padding: auto 0;
                 font-size: 30px;
@@ -54,7 +53,6 @@
 
             .grid-container1 > div {
                 background-color: rgba(255, 255, 255, 0.8);
-                /* text-align: center; */
                 font-size: 20px;
             }
 
@@ -103,7 +101,6 @@
                 right: -10px;	
             }
 
-            /* Memunculkan Jendela Pop Up*/
             #popup:target {
                 visibility: visible;
             }

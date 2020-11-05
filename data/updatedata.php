@@ -14,33 +14,60 @@
         header("Location: ../index.php");
     }
 ?>
-<title>
-    Update Data | Edit
-</title>
+<head>
+    <title>
+        Update Data | Edit
+    </title>
+    <style>
+        .button {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+        }
+
+        .button:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+    </style>
+</head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
-    <form action="" method="post">
+    <form class="w3-container" method="post" enctype="multipart/form-data" action="upload_aksi.php">
+        <h3>Import File Excel:</h3>
+        <input name="filee" type="file" required="required">
+        <input name="upload" type="submit" value="Import">
+    </form>
+    <div class="w3-container w3-green">
+        <h3>Update Form</h3>
+    </div>
+    <form class="w3-container" action="" method="post">
         <table>
-            <tr>
-                <td>Kota/Kabupaten</td>
-                <td>Konfirmasi</td>
-                <td>Sembuh</td>
-                <td>Suspek</td>
-            </tr>
             <?php  
-                while($data = mysqli_fetch_array($result)) {   
-                    echo "<tr>";
-                    echo "<td><b>".$data['ktkb']."</b></td>";
-                    echo "<td><input type='text' name='konfirmasi[]' value=".$data['konfirmasi']."></td>";
-                    echo "<td><input type='text' name='sembuh[]' value=".$data['sembuh']."></td>";
-                    echo "<td><input type='text' name='suspek[]' value=".$data['suspek']."></td>";
-                    echo "</tr>";
+                while($data = mysqli_fetch_array($result)) {
+                    echo "
+                        <tr>
+                            <td>".$data['ktkb']."</td>
+                            <td><input class='w3-input w3-hover-red' type='text' name='konfirmasi[]' value=".$data['konfirmasi']."></td>
+                            <td style='padding-left:30px;'><input class='w3-input w3-hover-green' type='text' name='sembuh[]' value=".$data['sembuh']."></td>
+                            <td style='padding-left:30px;'><input class='w3-input w3-hover-orange' type='text' name='suspek[]' value=".$data['suspek']."></td>
+                        </tr>
+                    ";
                     echo "<input type='hidden' name='kd_data[]' value=".$data['kd_data'].">";
                 }
             ?>
             <tr>
                 <td colspan="4" align="center">
                     <br/>
-                    <button type="submit" name="update">Update Data</button>
+                    <button class="button" type="submit" name="update"><b>Update Data</b></button>
                 </td>
             </tr>
         </table>
