@@ -262,7 +262,7 @@
                 <td width="27%">
                     <table style="border-collapse: collapse;" width="100%">
                         <tr>
-                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#3c1d47; color:#fff; padding-top:10px; padding-bottom:10px; text-align:center"><i>KOTA/KABUPATEN</i></th>
+                            <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#3c1d47; color:#fff; padding-top:15px; padding-bottom:15px; text-align:center"><i>KOTA/KABUPATEN</i></th>
                             <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#D21404; color:#fff; text-align:center"><i>KONFIRM</i></th>
                             <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#028A0F; color:#fff; text-align:center"><i>SEMBUH</i></th>
                             <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#FF6700; color:#fff; text-align:center"><i>SUSPECT</i></th>
@@ -294,7 +294,7 @@
                 <td width="27%">
                     <table style="border-collapse: collapse;" width="100%" >
                         <tr>
-                        <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#3c1d47; color:#fff; padding-top:10px; padding-bottom:10px; text-align:center"><i>KOTA/KABUPATEN</i></th>
+                        <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#3c1d47; color:#fff; padding-top:15px; padding-bottom:15px; text-align:center"><i>KOTA/KABUPATEN</i></th>
                             <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#D21404; color:#fff; text-align:center"><i>KONFIRM</i></th>
                             <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#028A0F; color:#fff; text-align:center"><i>SEMBUH</i></th>
                             <th style="font-size: 0.94vw; font-family:arial; padding-left:5px; padding-right:5px; background-color:#FF6700; color:#fff; text-align:center"><i>SUSPECT</i></th>
@@ -326,7 +326,7 @@
                         while($row = mysqli_fetch_array($result_img)) {
                     ?>
                     <a href="#popup">
-                        <img src="include/imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="auto"  min-width="50%" max-width="100%"/>
+                        <img src="include/imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="48.78%" min-width="10%" max-width="50%"/>
                     </a><br/>
                     <?php		
                         }
