@@ -17,10 +17,14 @@
 		$ktkb     		= $data->val($i, 1);
 		$konfirmasi     = $data->val($i, 2);
 		$sembuh   		= $data->val($i, 3);
-		$suspek  		= $data->val($i, 4);
+		$suspek1  		= $data->val($i, 4);
+		$suspek2  		= $data->val($i, 5);
+		$suspek3  		= $data->val($i, 6);
+		$meninggal   	= $data->val($i, 7);
+		$suspek			= $suspek1+$suspek2+$suspek3;
 
 		if($ktkb != ""){
-			mysqli_query($conn, "UPDATE tb_data SET ktkb='$ktkb', konfirmasi='$konfirmasi', sembuh='$sembuh', suspek='$suspek' WHERE kd_data=$kd_data");
+			mysqli_query($conn, "UPDATE tb_data SET ktkb='$ktkb', konfirmasi='$konfirmasi', sembuh='$sembuh', suspek='$suspek', meninggal='$meninggal' WHERE kd_data=$kd_data");
 			$kd_data++;
 		}
 	}

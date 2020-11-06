@@ -24,6 +24,7 @@
 ?>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             @font-face {
                 font-family: EB;
@@ -112,8 +113,8 @@
     
             .first-txt { 
                 position: absolute; 
-                top: 9%; 
-                right: 15%; 
+                top: 14%; 
+                right: 9%; 
                 color: #fff;
             } 
 
@@ -124,31 +125,31 @@
     
             .info-txt1 { 
                 position: absolute; 
-                top: 6%; 
-                left: 15%; 
+                top: 11%; 
+                left: 16%; 
                 color: #fff;
             }
             .info-txt2 { 
                 position: absolute; 
-                top: 6%; 
-                left: 15%; 
+                top: 11%; 
+                left: 17%; 
                 color: #fff;
             } 
             .info-txt3 { 
                 position: absolute; 
-                top: 6%; 
-                left: 15%; 
+                top: 11%; 
+                left: 17%; 
                 color: #fff;
             } 
             .info-txt4 { 
                 position: absolute; 
-                top: 6%; 
-                left: 22%; 
+                top: 11%; 
+                left: 20%; 
                 color: #fff;
             } 
         </style>
     </head>
-    <body style="margin: 0px">
+    <body style="margin: 0px; background-image: url('img/bg.png');" >
         <div id="popup">
             <div class="window">
                 <a href="#" class="close-button" title="Close">X</a>
@@ -161,23 +162,21 @@
         </div>
         <?php
             $no = 0;
-            $no_ = 0;
-            $smp = array();
             $kt = array();
             $kon = array();
             $sem = array();
             $sus = array();
             $kot = array();
             include_once("include/koneksi.php");
-            $result_ = mysqli_query($conn, "SELECT * FROM tb_simpanan");
             $result = mysqli_query($conn, "SELECT * FROM tb_data ORDER BY konfirmasi DESC");
             $result_img = mysqli_query($conn, "SELECT imageId FROM tb_foto");
-            
+
+            $sum_men = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(meninggal) FROM tb_data"));
             $sum_p = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data"));
-            $sum_s = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(sembuh) FROM tb_data"));            
-            $sum_mr1 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where kd_data = '2'"));
-            $sum_mr2 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where kd_data = '25'"));
-            $sum_mr3 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where kd_data = '14'"));
+            $sum_s = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(sembuh) FROM tb_data"));
+            $sum_mr1 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where ktkb = 'KAB. MALANG'"));
+            $sum_mr2 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where ktkb = 'KOTA MALANG'"));
+            $sum_mr3 = mysqli_fetch_row(mysqli_query($conn, "SELECT SUM(konfirmasi) FROM tb_data where ktkb = 'KOTA BATU'"));
             $total = $sum_mr1[0] + $sum_mr2[0] + $sum_mr3[0];
             
             while($data = mysqli_fetch_array($result)) {
@@ -185,63 +184,57 @@
                 $kon[$no] = $data['konfirmasi'];
                 $sem[$no] = $data['sembuh'];
                 $sus[$no] = $data['suspek'];
-                $kot[$no] = $data['kd_data'];
                 $no++;
-            }
-            while($data = mysqli_fetch_array($result_)) {
-                $smp[$no_] = $data['isi'];
-                $no_++;
             }
         ?>
         <table width="100%">
             <tr>
                 <td align="left" width="50%">
                     <a href="data/updatedata.php">
-                        <img src="img/LOGOKIRIBARU.png?>" width="60%" height="%" min-width="50%" max-width="100%" />
+                        <img src="img/LOGOKIRIBARU.png?>" width="70%" height="%" min-width="50%" max-width="100%" />
                     </a>
                 </td>
                 <td align="right" width="50%">
                     <div class="headknn">
-                        <a href="data/updatetgl.php">
-                            <img src="img/headkanan.png" width="50%" height="60%"> 
-                            <h3 class="first-txt"> 
-                                <?php echo $smp[1]; ?>
-                            </h3>
-                        </a>
+                        <img src="img/headkanan.png" width="60%" height="70%"> 
+                        <h1 class="first-txt" style="font-family:EB"> 
+                            <?php echo date("d F Y", mktime(0, 0, 0, date("m"), date("d")-1, date("Y"))); ?>
+                        </h1>
                     </div>
                 </td>
             </tr>
         </table>
+        <br/><br/>
         <center>
         <table>
             <tr>
                 <td>
                     <div class="info"> 
-                        <img src="img/positif.png" width="110%" height="115%"> 
+                        <img src="img/positif.png" width="120%" height="125%"> 
                         <h2 class="info-txt1"> 
                             <?php echo $sum_p[0]; ?> 
                         </h2>
                     </div>
                 </td>
-                <td>
+                <td style="padding-left: 70px;">
                     <div class="info"> 
-                        <img src="img/sembuh.png" width="110%" height="115%"> 
+                        <img src="img/sembuh.png" width="120%" height="125%"> 
                         <h2 class="info-txt2"> 
                             <?php echo $sum_s[0]; ?> 
                         </h2>
                     </div>
                 </td>
-                <td>
+                <td style="padding-left: 70px;">
                     <div class="info"> 
-                        <img src="img/meninggal.png" width="110%" height="115%"> 
+                        <img src="img/meninggal.png" width="120%" height="125%"> 
                         <h2 class="info-txt3"> 
-                            <?php echo $smp[0]; ?>
+                            <?php echo $sum_men[0]; ?>
                         </h2>
                     </div>
                 </td>
-                <td>
+                <td style="padding-left: 70px;">
                     <div class="info"> 
-                        <img src="img/malangraya.png" width="110%" height="115%"> 
+                        <img src="img/malangraya.png" width="120%" height="125%"> 
                         <h2 class="info-txt4"> 
                             <?php echo $total; ?> 
                         </h2>
@@ -250,6 +243,7 @@
             </tr>
         </table>
         </center>
+        <br/>
         <table style="border-collapse: collapse;" width="100%">
             <tr align="center">
                 <td colspan="2"><a style="font-size:2vw; font-family:EB"><i>DATA COVID-19 PROVINSI JATIM</i></a></td>
@@ -267,7 +261,7 @@
                         <?php  
                             $x = 0;
                             while($x < 20) {   
-                                if ($kot[$x] == 1 || $kot[$x] == 25 || $kot[$x] == 2 || $kot[$x] == 14){
+                                if ($kt[$x] == "KOTA SURABAYA" || $kt[$x] == "KAB. MALANG" || $kt[$x] == "KOTA MALANG" || $kt[$x] == "KOTA BATU"){
                                     echo "<tr>";
                                     echo "<td style='padding-top:3px; font-family:arial; padding-bottom:3px; font-size: 0.94vw; background-color:#53207c; color:#fff;'><b><i>".$kt[$x]."</i></b></td>";
                                     echo "<td style='font-size: 1.05vw; font-family:arial; text-align:center; background-color:#e12423; color:#fff'><b><i>".$kon[$x]."</i></b></td>";
@@ -298,7 +292,7 @@
                         <?php
 
                             for($xy = 20; $xy < 40; $xy++) {
-                                if ($kot[$xy] == 1 || $kot[$xy] == 25 || $kot[$xy] == 2 || $kot[$xy] == 14){
+                                if ($kt[$xy] == "KOTA SURABAYA" || $kt[$xy] == "KAB. MALANG" || $kt[$xy] == "KOTA MALANG" || $kt[$xy] == "KOTA BATU"){
                                     echo "<tr>";
                                 echo "<td style='padding-top:3px; font-family:arial; padding-bottom:3px; font-size: 0.94vw; background-color:#53207c; color:#fff;'><b><i>".$kt[$xy]."</i></b></td>";
                                 echo "<td style='font-size: 1.0vw; font-family:arial; text-align:center; background-color:#e12423; color:#fff'><b><i>".$kon[$xy]."</i></b></td>";
@@ -323,7 +317,7 @@
                         while($row = mysqli_fetch_array($result_img)) {
                     ?>
                     <a href="#popup">
-                        <img src="include/imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="48.78%" min-width="10%" max-width="50%"/>
+                        <img src="include/imageView.php?image_id=<?php echo $row["imageId"]; ?>" width="100%" height="%" min-width="10%" max-width="100%"/>
                     </a><br/>
                     <?php		
                         }

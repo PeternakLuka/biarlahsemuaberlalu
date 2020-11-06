@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2020 at 01:11 PM
+-- Generation Time: Nov 06, 2020 at 04:12 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -33,54 +33,55 @@ CREATE TABLE `tb_data` (
   `ktkb` varchar(30) NOT NULL,
   `konfirmasi` int(11) NOT NULL,
   `sembuh` int(11) NOT NULL,
-  `suspek` int(11) NOT NULL
+  `suspek` int(11) NOT NULL,
+  `meninggal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_data`
 --
 
-INSERT INTO `tb_data` (`kd_data`, `ktkb`, `konfirmasi`, `sembuh`, `suspek`) VALUES
-(1, 'KOTA SURABAYA', 16067, 14810, 4499),
-(2, 'KOTA MALANG', 0, 0, 0),
-(3, 'KAB. SIDOARJO', 0, 0, 0),
-(4, 'KAB. GRESIK', 0, 0, 0),
-(5, 'KAB. BANYUWANGI', 0, 0, 0),
-(6, 'KAB. PASURUAN', 0, 0, 0),
-(7, 'KAB. PROBOLINGGO', 0, 0, 0),
-(8, 'KAB. JEMBER', 0, 0, 0),
-(9, 'KAB. JOMBANG', 0, 0, 0),
-(10, 'KAB. MOJOKERTO', 0, 0, 0),
-(11, 'KAB. KEDIRI', 0, 0, 0),
-(12, 'KAB. LUMAJANG', 0, 0, 0),
-(13, 'KAB. LAMONGAN', 0, 0, 0),
-(14, 'KAB. MALANG', 0, 0, 0),
-(15, 'KAB. BLITAR', 0, 0, 0),
-(16, 'KAB. BONDOWOSO', 0, 0, 0),
-(17, 'KOTA PASURUAN', 0, 0, 0),
-(18, 'KAB. SITUBONDO', 0, 0, 0),
-(19, 'KOTA MOJOKERTO', 0, 0, 0),
-(20, 'KAB. SUMENEP', 0, 0, 0),
-(21, 'KAB. TUBAN', 0, 0, 0),
-(22, 'KOTA PROBOLINGGO', 0, 0, 0),
-(23, 'KAB. NGANJUK', 0, 0, 0),
-(24, 'KAB. BANGKALAN', 0, 0, 0),
-(25, 'KOTA BATU', 0, 0, 0),
-(26, 'KAB. BOJONEGORO', 0, 0, 0),
-(27, 'KAB. PONOROGO', 0, 0, 0),
-(28, 'KAB. MAGETAN', 0, 0, 0),
-(29, 'KAB. TULUNGAGUNG', 0, 0, 0),
-(30, 'KAB. PAMEKASAN', 0, 0, 0),
-(31, 'KAB. TRENGGALEK', 0, 0, 0),
-(32, 'KAB. SAMPANG', 0, 0, 0),
-(33, 'KAB. PACITAN', 0, 0, 0),
-(34, 'KOTA KEDIRI', 0, 0, 0),
-(35, 'KAB. NGAWI', 0, 0, 0),
-(36, 'KOTA BLITAR', 0, 0, 0),
-(37, 'KOTA MADIUN', 0, 0, 0),
-(38, 'KAB. MADIUN', 0, 0, 0),
-(39, 'AWAK BUAH KAPAL', 0, 0, 0),
-(40, 'RS LAPANGAN INDRAPURA', 0, 0, 0);
+INSERT INTO `tb_data` (`kd_data`, `ktkb`, `konfirmasi`, `sembuh`, `suspek`, `meninggal`) VALUES
+(1, 'KAB. PAMEKASAN', 365, 322, 1828, 32),
+(2, 'KAB. LAMONGAN', 866, 729, 1370, 69),
+(3, 'KAB. BANYUWANGI', 2094, 1694, 1879, 168),
+(4, 'KAB. SITUBONDO', 740, 602, 1078, 64),
+(5, 'KOTA SURABAYA', 16148, 14896, 4542, 1177),
+(6, 'KAB. BOJONEGORO', 579, 478, 311, 60),
+(7, 'RS LAPANGAN INDRAPURA', 0, 0, 0, 0),
+(8, 'AWAK BUAH KAPAL', 19, 19, 0, 0),
+(9, 'KOTA KEDIRI', 260, 220, 1041, 14),
+(10, 'KOTA MOJOKERTO', 699, 596, 1010, 45),
+(11, 'KAB. PACITAN', 275, 238, 237, 9),
+(12, 'KAB. MALANG', 1062, 951, 2301, 67),
+(13, 'KAB. LUMAJANG', 955, 692, 934, 103),
+(14, 'KOTA BLITAR', 188, 175, 269, 9),
+(15, 'KAB. SUMENEP', 662, 598, 635, 36),
+(16, 'KAB. SIDOARJO', 7263, 6642, 4505, 471),
+(17, 'KOTA PASURUAN', 753, 644, 87, 84),
+(18, 'KAB. KEDIRI', 956, 773, 321, 68),
+(19, 'KAB. BLITAR', 837, 726, 1883, 64),
+(20, 'KAB. TULUNGAGUNG', 494, 451, 404, 4),
+(21, 'KAB. TRENGGALEK', 335, 279, 432, 13),
+(22, 'KAB. JEMBER', 1311, 1104, 2129, 57),
+(23, 'KAB. NGAWI', 247, 211, 146, 10),
+(24, 'KAB. GRESIK', 3645, 3301, 3297, 230),
+(25, 'KAB. MOJOKERTO', 1055, 992, 1587, 32),
+(26, 'KAB. MAGETAN', 548, 454, 904, 27),
+(27, 'KAB. JOMBANG', 1216, 1019, 71, 110),
+(28, 'KAB. SAMPANG', 297, 260, 234, 18),
+(29, 'KOTA BATU', 609, 505, 1382, 59),
+(30, 'KAB. NGANJUK', 622, 526, 1150, 62),
+(31, 'KAB. PONOROGO', 535, 508, 690, 18),
+(32, 'KOTA MADIUN', 166, 142, 176, 8),
+(33, 'KAB. BONDOWOSO', 820, 757, 787, 27),
+(34, 'KAB. MADIUN', 150, 128, 239, 10),
+(35, 'KAB. PROBOLINGGO', 1356, 1233, 267, 76),
+(36, 'KAB. PASURUAN', 1675, 1439, 655, 153),
+(37, 'KAB. BANGKALAN', 626, 513, 1691, 67),
+(38, 'KOTA MALANG', 2078, 1854, 3021, 210),
+(39, 'KAB. TUBAN', 648, 520, 276, 78),
+(40, 'KOTA PROBOLINGGO', 637, 581, 956, 44);
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,7 @@ CREATE TABLE `tb_simpanan` (
 
 INSERT INTO `tb_simpanan` (`kd_simpanan`, `isi`) VALUES
 (1, '3838'),
-(2, '4 November 2025');
+(2, '4 November 2023');
 
 --
 -- Indexes for dumped tables
